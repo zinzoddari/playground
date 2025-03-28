@@ -46,6 +46,6 @@ public class BoardService {
         final Board board = boardRepository.findById(id)
                 .orElseThrow(NotFoundBoardException::new);
 
-        boardRepository.deleteById(id);
+        boardRepository.delete(board);
     }
 }
