@@ -8,6 +8,7 @@ import com.playground.borad.dto.BoardUpdateRequest;
 import com.playground.borad.repository.BoardRepository;
 import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -16,6 +17,8 @@ import org.springframework.transaction.annotation.Transactional;
 public class BoardService {
 
     private final BoardRepository boardRepository;
+    private final RedisTemplate<String, Object> redisTemplate;
+
 
     @Transactional(readOnly = true)
     public BoardDetailResponse getBoard(final Long id) {
@@ -31,6 +34,7 @@ public class BoardService {
     @Transactional
     public void register(@NotNull final BoardSaveRequest request) {
         boardRepository.save(request.toEntity());
+        redisTemplate.opsForValue().set("zz", "xx");
     }
 
     @Transactional

@@ -1,6 +1,7 @@
 package com.playground.borad.dto;
 
 import com.playground.borad.domain.Board;
+import com.playground.borad.domain.BoardRedis;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 
@@ -21,5 +22,9 @@ public record BoardSaveRequest(
 
         public Board toEntity() {
                 return Board.created(title, content, createdBy);
+        }
+
+        public BoardRedis toRedisEntity() {
+                return BoardRedis.created(title, content, createdBy);
         }
 }

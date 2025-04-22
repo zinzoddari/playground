@@ -41,7 +41,6 @@ public class Board extends AuditedInfo {
     @Column(name = "createdBy", columnDefinition = "varchar(16)", nullable = false)
     private String createdBy;
 
-    @NotNull
     @Comment("수정자")
     @Column(name = "updateBy", columnDefinition = "varchar(16)")
     private String updateBy;
