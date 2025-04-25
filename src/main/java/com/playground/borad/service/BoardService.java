@@ -5,6 +5,7 @@ import com.playground.borad.domain.NotFoundBoardException;
 import com.playground.borad.dto.BoardDetailResponse;
 import com.playground.borad.dto.BoardSaveRequest;
 import com.playground.borad.dto.BoardUpdateRequest;
+import com.playground.borad.repository.BoardCacheRepository;
 import com.playground.borad.repository.BoardRepository;
 import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
@@ -17,12 +18,12 @@ import org.springframework.transaction.annotation.Transactional;
 public class BoardService {
 
     private final BoardRepository boardRepository;
-    private final RedisTemplate<String, Object> redisTemplate;
+    private final BoardCacheRepository boardCacheRepository;
 
 
     @Transactional(readOnly = true)
     public BoardDetailResponse getBoard(final Long id) {
-        final Board board = boardRepository.findById(id)
+        final Board board = boardCacheRepository.get(id)
                 .orElseThrow(NotFoundBoardException::new);
 
         return BoardDetailResponse.created(board.getTitle(),
@@ -33,8 +34,9 @@ public class BoardService {
 
     @Transactional
     public void register(@NotNull final BoardSaveRequest request) {
-        boardRepository.save(request.toEntity());
-        redisTemplate.opsForValue().set("zz", "xx");
+        final Board board = boardRepository.save(request.toEntity());
+
+        boardCacheRepository.save(board.getId(), board);
     }
 
     @Transactional
