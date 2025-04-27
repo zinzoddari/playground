@@ -18,10 +18,10 @@ public class SimpleRedisPublisher<T> implements MessagePublisher<T> {
 
     @Override
     public void publish(final RedisChannel channel, final T object) {
-        redisTemplate.convertAndSend(channel.getName(), parse(object));
+        redisTemplate.convertAndSend(channel.getName(), convertToJson(object));
     }
 
-    private String parse(final T object) {
+    private String convertToJson(final T object) {
         try {
             return objectMapper.writeValueAsString(object);
         } catch (JsonProcessingException e) {

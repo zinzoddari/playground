@@ -36,6 +36,12 @@ dependencies {
 
 	// swagger
 	implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.8.6")
+
+	// opensearch
+	implementation("org.opensearch.client:opensearch-java:2.13.0")
+	implementation("org.apache.httpcomponents:httpclient:4.5.13")
+	implementation("org.opensearch.client:opensearch-rest-client:2.13.0")
+
 }
 
 tasks.withType<Test> {
