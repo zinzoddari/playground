@@ -5,8 +5,10 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
+
 @Getter
-@NoArgsConstructor(access = AccessLevel.PRIVATE)
+@NoArgsConstructor
 public class BoardDocument {
 
     private Long id;
@@ -15,12 +17,23 @@ public class BoardDocument {
 
     private String content;
 
-    @Builder(access = AccessLevel.PROTECTED)
-    private BoardDocument(Long id, String title, String content) {
+    private String createdBy;
+
+    private LocalDateTime createdDate;
+
+    private String updateBy;
+
+    public BoardDocument(Long id, String title, String content, String createdBy, LocalDateTime createdDate, String updateBy) {
         this.id = id;
         this.title = title;
         this.content = content;
+        this.createdBy = createdBy;
+        this.createdDate = createdDate;
+        this.updateBy = updateBy;
     }
+
+    @Builder
+
 
     public static BoardDocument create(final Long id, final String title, final String content) {
         return BoardDocument.builder()

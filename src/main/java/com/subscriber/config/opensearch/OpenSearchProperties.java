@@ -14,7 +14,7 @@ class OpenSearchProperties {
 
     private final String scheme;
 
-    private OpenSearchProperties(@Value("${opensearch.host}") final String host,
+    OpenSearchProperties(@Value("${opensearch.host}") final String host,
                          @Value("${opensearch.port}") final int port,
                          @Value("${opensearch.scheme}") final String scheme) {
         this.host = host;

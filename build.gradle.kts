@@ -42,6 +42,7 @@ dependencies {
 	implementation("org.apache.httpcomponents:httpclient:4.5.13")
 	implementation("org.opensearch.client:opensearch-rest-client:2.13.0")
 
+	implementation("com.fasterxml.jackson.datatype:jackson-datatype-jsr310")
 }
 
 tasks.withType<Test> {

@@ -1,5 +1,6 @@
 package com.subscriber.config.opensearch;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import org.apache.http.HttpHost;
 import org.opensearch.client.RestClient;
@@ -14,6 +15,7 @@ import org.springframework.context.annotation.Configuration;
 class OpenSearchConfig {
 
     private final OpenSearchProperties openSearchProperties;
+    private final ObjectMapper objectMapper;
 
     @Bean
     public OpenSearchClient openSearchClient() {
@@ -27,7 +29,7 @@ class OpenSearchConfig {
 
         final RestClientTransport transport = new RestClientTransport(
                 restClient,
-                new JacksonJsonpMapper()
+                new JacksonJsonpMapper(objectMapper)
         );
 
         return new OpenSearchClient(transport);
