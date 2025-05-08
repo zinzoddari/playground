@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Repository;
+import org.springframework.util.ObjectUtils;
 
 @Slf4j
 @Repository
@@ -26,7 +27,13 @@ public class BoardRedisRepository implements BoardCacheRepository {
 
     @Override
     public Optional<Board> get(final Long id) {
-        return Optional.ofNullable(redisTemplate.opsForValue().get(generateKey(id)));
+        Object value = redisTemplate.opsForValue().get(generateKey(id));
+
+        if (ObjectUtils.isEmpty(value)) {
+            return Optional.empty();
+        }
+
+        return Optional.ofNullable(objectMapper.convertValue(value, Board.class));
     }
 
     private String generateKey(final Long id) {
